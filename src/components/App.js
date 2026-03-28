@@ -142,7 +142,6 @@ function App() {
     const [cityIndex, setCityIndex] = useState(0);
     const [landmarkIndex, setLandmarkIndex] = useState(0);
 
-    // Helpers to get current selection
     const currentState = states[stateIndex];
     const currentCity = currentState.city[cityIndex];
     const currentLandmark = currentCity.landmarks[landmarkIndex];
@@ -153,45 +152,42 @@ function App() {
 
             {/* State Selection */}
             <div>
-                <label htmlFor="state">Select State:</label>
                 <select id="state" value={stateIndex} onChange={(e) => {
                     setStateIndex(parseInt(e.target.value));
-                    setCityIndex(0); // Reset city to first when state changes
-                    setLandmarkIndex(0); // Reset landmark
+                    setCityIndex(0);
+                    setLandmarkIndex(0);
                 }}>
                     {states.map((st, i) => (
                         <option key={i} value={i}>{st.name}</option>
                     ))}
                 </select>
-                <div id="state-name">{currentState.name}</div>
-                <div id="state-description">{currentState.description}</div>
+                <h1 id="state-title">{currentState.name}</h1>
+                <p id="state-description">{currentState.description}</p>
             </div>
 
             {/* City Selection */}
             <div>
-                <label htmlFor="city">Select City:</label>
                 <select id="city" value={cityIndex} onChange={(e) => {
                     setCityIndex(parseInt(e.target.value));
-                    setLandmarkIndex(0); // Reset landmark to first when city changes
+                    setLandmarkIndex(0);
                 }}>
                     {currentState.city.map((ct, i) => (
                         <option key={i} value={i}>{ct.name}</option>
                     ))}
                 </select>
-                <div id="city-name">{currentCity.name}</div>
-                <div id="city-description">{currentCity.description}</div>
+                <h1 id="city-title">{currentCity.name}</h1>
+                <p id="city-description">{currentCity.description}</p>
             </div>
 
             {/* Landmark Selection */}
             <div>
-                <label htmlFor="landmark">Select Landmark:</label>
                 <select id="landmark" value={landmarkIndex} onChange={(e) => setLandmarkIndex(parseInt(e.target.value))}>
                     {currentCity.landmarks.map((lm, i) => (
                         <option key={i} value={i}>{lm.name}</option>
                     ))}
                 </select>
-                <div id="landmark-name">{currentLandmark.name}</div>
-                <div id="landmark-description">{currentLandmark.description}</div>
+                <h1 id="landmark-title">{currentLandmark.name}</h1>
+                <p id="landmark-description">{currentLandmark.description}</p>
             </div>
         </div>
     );
