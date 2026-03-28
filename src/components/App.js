@@ -126,4 +126,75 @@ const states = [{
         }]
     }, {
         name: "Darbhanga",
-        description: "Darbhanga is a city and Municipal Corporation in the Indian state of Bihar. It is the 6th largest city of Bihar, only after Patna, Gaya, Bhagalpur, Muzaffarpur and Purnea. It is the headquarters of Darbhanga district and Darbhanga division and
+        description: "Darbhanga is a city and Municipal Corporation in the Indian state of Bihar. It is the 6th largest city of Bihar, only after Patna, Gaya, Bhagalpur, Muzaffarpur and Purnea. It is the headquarters of Darbhanga district and Darbhanga division and was the seat of the Raj Darbhanga and capital of the Mithila region.",
+        landmarks: [{
+            name: "Singhwara",
+            description: "Famous for its Groundnut Market",
+        }, {
+            name: "Jale",
+            description: "Famous for its roasted seads market.",
+        }]
+    }]
+}];
+
+function App() {
+    const [stateIndex, setStateIndex] = useState(0);
+    const [cityIndex, setCityIndex] = useState(0);
+    const [landmarkIndex, setLandmarkIndex] = useState(0);
+
+    // Helpers to get current selection
+    const currentState = states[stateIndex];
+    const currentCity = currentState.city[cityIndex];
+    const currentLandmark = currentCity.landmarks[landmarkIndex];
+
+    return (
+        <div id="main">
+            <h1>Dropdown Selection</h1>
+
+            {/* State Selection */}
+            <div>
+                <label htmlFor="state">Select State:</label>
+                <select id="state" value={stateIndex} onChange={(e) => {
+                    setStateIndex(parseInt(e.target.value));
+                    setCityIndex(0); // Reset city to first when state changes
+                    setLandmarkIndex(0); // Reset landmark
+                }}>
+                    {states.map((st, i) => (
+                        <option key={i} value={i}>{st.name}</option>
+                    ))}
+                </select>
+                <div id="state-name">{currentState.name}</div>
+                <div id="state-description">{currentState.description}</div>
+            </div>
+
+            {/* City Selection */}
+            <div>
+                <label htmlFor="city">Select City:</label>
+                <select id="city" value={cityIndex} onChange={(e) => {
+                    setCityIndex(parseInt(e.target.value));
+                    setLandmarkIndex(0); // Reset landmark to first when city changes
+                }}>
+                    {currentState.city.map((ct, i) => (
+                        <option key={i} value={i}>{ct.name}</option>
+                    ))}
+                </select>
+                <div id="city-name">{currentCity.name}</div>
+                <div id="city-description">{currentCity.description}</div>
+            </div>
+
+            {/* Landmark Selection */}
+            <div>
+                <label htmlFor="landmark">Select Landmark:</label>
+                <select id="landmark" value={landmarkIndex} onChange={(e) => setLandmarkIndex(parseInt(e.target.value))}>
+                    {currentCity.landmarks.map((lm, i) => (
+                        <option key={i} value={i}>{lm.name}</option>
+                    ))}
+                </select>
+                <div id="landmark-name">{currentLandmark.name}</div>
+                <div id="landmark-description">{currentLandmark.description}</div>
+            </div>
+        </div>
+    );
+}
+
+export default App;
